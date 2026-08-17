@@ -22,6 +22,42 @@ const reklamepakker = [
     beskrivelse: "Stort skilt i førsteklasses plassering, samt logo på nettsiden.",
   },
 ];
+
+const lysstolpePriser = [
+  {
+    navn: "Privatperson / familie",
+    pris: "1 500 kr for 3 år",
+    beskrivelse: "Navn på plakett. Gi bort en stolpe i gave, eller støtt løypa sammen med venner.",
+  },
+  {
+    navn: "Bedrift",
+    pris: "3 000 kr for 3 år",
+    beskrivelse: "Bedriftsnavn og logo på plakett – synlig støtte til lokalt idretts- og friluftsliv.",
+  },
+];
+
+const hvaGarPengeneTil = [
+  "preparering og vedlikehold av skiløyper",
+  "drift og vedlikehold av lysanlegget",
+  "vedlikehold og utvikling av løypenettet",
+  "aktivitet og skiglede for barn og unge",
+  "videre utvikling av skitilbudet i nærmiljøet",
+];
+
+const hvemKanSponse = [
+  {
+    tittel: "Privatpersoner og familier",
+    beskrivelse: "Sett familiens navn på en stolpe, gi bort en stolpe i gave, eller støtt løypa sammen med venner.",
+  },
+  {
+    tittel: "Lokale bedrifter",
+    beskrivelse: "Vis at bedriften støtter lokalt idretts- og friluftsliv med navn og logo på en av stolpene i løypa.",
+  },
+  {
+    tittel: "Lag og grupper",
+    beskrivelse: "En treningsgruppe, vennegjeng, skoleklasse eller et årskull kan også gå sammen om en stolpe.",
+  },
+];
 ---
 
 <BaseLayout title="Reklameplasser & lysstolper – Spikkestad Skiarena">
@@ -61,38 +97,81 @@ const reklamepakker = [
 
     <!-- Lysstolper i marka -->
     <section class="mb-16">
-      <h2 class="text-2xl font-bold text-gray-900 mb-4">Lysstolper i marka</h2>
+      <h2 class="text-2xl font-bold text-gray-900 mb-4">Spons en lysstolpe i ROS-løypa</h2>
       <p class="text-gray-700 leading-relaxed mb-4">
-        Vi har lansert et forslag om å selge lysstolper innover i løypenettet
-        i marka. Ved å støtte en eller flere lysstolper er din bedrift med på
-        å gi bedre og tryggere lysforhold for alle som trener og går tur i
-        Kjekstadmarka – samtidig som bedriften kan få synlig merking på
+        Vil du være med på å holde skiløypene våre levende? IL ROS Skigruppa
+        ønsker å gi privatpersoner, familier og lokale bedrifter muligheten
+        til å <strong>sponse sin egen lysstolpe i ROS-løypa</strong>. Med
+        flere hundre stolper gjennom løypenettet håper vi å skape et synlig
+        og hyggelig spleiselag for drift og utvikling av skitilbudet vårt.
+      </p>
+
+      <h3 class="text-xl font-semibold text-gray-900 mt-8 mb-3">Slik fungerer det</h3>
+      <p class="text-gray-700 leading-relaxed mb-4">
+        Når du sponser en lysstolpe, får stolpen en liten, diskret plakett
+        med navn på personen, familien eller bedriften som støtter løypa.
+        For bedrifter kan plaketten også inneholde bedriftsnavn og logo.
+      </p>
+      <div class="bg-white rounded-xl border border-gray-200 shadow-sm p-6 max-w-sm mx-auto text-center mb-4">
+        <p class="text-xs tracking-wide text-gray-500 mb-2">DENNE LYKTSTOLPEN STØTTES AV</p>
+        <p class="text-lg font-semibold text-gray-900">Familien Hansen</p>
+        <p class="text-sm text-blue-700 mt-1">IL ROS SKI</p>
+      </div>
+      <p class="text-gray-700 leading-relaxed mb-4">
+        Stolpene nummereres, slik at du får <strong>din egen stolpe i
+        løypa</strong>. Har du en favorittdel av løypa, en bakke du kjenner
+        godt eller et sted som betyr noe spesielt, kan du gjerne ønske deg en
+        stolpe i dette området så langt det er ledig kapasitet.
+      </p>
+
+      <h3 class="text-xl font-semibold text-gray-900 mt-8 mb-3">Hva går pengene til?</h3>
+      <p class="text-gray-700 mb-3">Bidragene går direkte til arbeidet i IL ROS Skigruppa, blant annet til:</p>
+      <ul class="list-disc list-inside text-gray-700 space-y-1 mb-4">
+        {hvaGarPengeneTil.map((punkt) => <li>{punkt}</li>)}
+      </ul>
+      <p class="text-gray-700 leading-relaxed mb-8">
+        Målet er enkelt: <strong>best mulig skiløyper og aktivitetstilbud for flest mulig.</strong>
+      </p>
+
+      <h3 class="text-xl font-semibold text-gray-900 mt-8 mb-4">Hvem kan sponse en stolpe?</h3>
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+        {hvemKanSponse.map((gruppe) => (
+          <div class="bg-white rounded-xl shadow-md p-6 border border-gray-100">
+            <h4 class="font-semibold text-gray-900 mb-2">{gruppe.tittel}</h4>
+            <p class="text-gray-600 text-sm">{gruppe.beskrivelse}</p>
+          </div>
+        ))}
+      </div>
+
+      <h3 class="text-xl font-semibold text-gray-900 mt-8 mb-4">Priser</h3>
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+        {lysstolpePriser.map((pakke) => (
+          <div class="bg-blue-50 rounded-xl shadow-md p-6 flex flex-col text-center border border-blue-100">
+            <h4 class="text-xl font-semibold text-gray-900 mb-1">{pakke.navn}</h4>
+            <p class="text-blue-700 font-bold text-lg mb-3">{pakke.pris}</p>
+            <p class="text-gray-600 flex-1">{pakke.beskrivelse}</p>
+          </div>
+        ))}
+      </div>
+      <p class="text-gray-700 leading-relaxed mt-6">
+        Produksjon og montering av standard plakett er inkludert. Etter
+        perioden får sponsor mulighet til å fornye støtten og beholde
         stolpen.
       </p>
-      <div class="bg-blue-50 rounded-xl border border-blue-100 p-6 md:p-8">
-        <p class="text-gray-700 mb-2">
-          <strong>Status:</strong> Dette er foreløpig et forslag under
-          planlegging. Nøyaktig antall stolper, plassering og pris per
-          stolpe fastsettes i samarbeid med kommune og lokale myndigheter.
-        </p>
-        <p class="text-gray-700">
-          Er din bedrift interessert i å bidra? Ta gjerne kontakt allerede
-          nå, så holder vi deg oppdatert etter hvert som prosjektet
-          konkretiseres.
-        </p>
-      </div>
     </section>
 
     <section class="text-center">
-      <h2 class="text-2xl font-semibold text-gray-800 mb-3">Interessert?</h2>
+      <h2 class="text-2xl font-semibold text-gray-800 mb-3">Vil du være med?</h2>
       <p class="text-gray-700 mb-6">
-        Ta kontakt med oss for å diskutere reklameplass, lysstolper eller
-        andre måter å samarbeide med Spikkestad Skiarena på.
+        Ta kontakt for å registrere deg og oppgi ønsket navn på plaketten –
+        bedrifter kan også sende inn logo. Har du ønske om en bestemt stolpe
+        eller del av løypa, kan dette oppgis ved registrering, og vi
+        forsøker å imøtekomme ønsker så langt det er praktisk mulig.
       </p>
       <a
         href="/kontakt"
         class="inline-block bg-green-600 text-white font-semibold py-3 px-6 rounded-lg shadow-md hover:bg-green-700 transition">
-        Kontakt oss
+        Spons en stolpe – kontakt oss
       </a>
     </section>
   </main>
