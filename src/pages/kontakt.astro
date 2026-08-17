@@ -1,0 +1,56 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import Navbar from "../components/Navbar.astro";
+import Footer from "../components/Footer.astro";
+import "../styles/tailwind.css";
+---
+
+<BaseLayout title="Kontakt – Spikkestad Skiarena">
+  <Navbar />
+
+  <main class="max-w-4xl mx-auto pt-24 pb-16 px-6">
+    <h1 class="text-xl md:text-4xl font-extrabold text-center mb-8 text-gray-900">
+      Kontakt
+    </h1>
+
+    <section class="space-y-6 text-lg leading-relaxed">
+      <p>
+        For spørsmål om <strong>Spikkestad Skiarena</strong>, samarbeid,
+        reklameplasser eller lysstolper i marka, ta kontakt med
+        <strong>IL ROS Skigruppa</strong>.
+      </p>
+
+      <h2 class="text-2xl font-semibold mt-10 mb-2 text-gray-800">
+        Hovedkontakt – IL ROS Skigruppa
+      </h2>
+      <p class="text-gray-700">
+        <strong>E-post:</strong>
+        <a href="mailto:ski@ilros.no" class="text-blue-700 hover:underline">ski@ilros.no</a>
+      </p>
+
+      <h2 class="text-2xl font-semibold mt-10 mb-2 text-gray-800">
+        Om IL ROS – Skigruppa
+      </h2>
+      <p class="text-gray-700">
+        <strong>IL ROS</strong> (Idrettslaget Røyken og Spikkestad) er en
+        aktiv fleridrettsforening i Røyken. Skigruppa jobber for skiglede
+        for barn, ungdom og voksne gjennom trening, aktivitet og lokale
+        renn, med Spikkestad Skiarena som hjemmebane.
+      </p>
+
+      <p class="text-gray-700">
+        Les mer om klubben på
+        <a
+          href="https://www.ilros.no/ski/"
+          target="_blank"
+          rel="noopener noreferrer"
+          class="text-blue-700 hover:underline"
+        >
+          www.ilros.no
+        </a>.
+      </p>
+    </section>
+  </main>
+
+  <Footer />
+</BaseLayout>

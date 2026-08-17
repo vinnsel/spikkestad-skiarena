@@ -1,0 +1,101 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import Navbar from "../components/Navbar.astro";
+import Footer from "../components/Footer.astro";
+import "../styles/tailwind.css";
+
+// Placeholder-priser – juster til reelle beløp før publisering
+const reklamepakker = [
+  {
+    navn: "Bronse",
+    pris: "2 000 kr / år",
+    beskrivelse: "Mindre reklameskilt på veggen i Skihytta.",
+  },
+  {
+    navn: "Sølv",
+    pris: "5 000 kr / år",
+    beskrivelse: "Standard reklameskilt, godt synlig plassering i Skihytta.",
+  },
+  {
+    navn: "Gull",
+    pris: "10 000 kr / år",
+    beskrivelse: "Stort skilt i førsteklasses plassering, samt logo på nettsiden.",
+  },
+];
+---
+
+<BaseLayout title="Reklameplasser & lysstolper – Spikkestad Skiarena">
+  <Navbar />
+
+  <main class="max-w-4xl mx-auto pt-24 pb-16 px-6">
+    <h1 class="text-xl md:text-4xl font-extrabold text-center mb-8 text-gray-900">
+      Reklameplasser & lysstolper
+    </h1>
+    <p class="text-lg text-gray-700 text-center max-w-2xl mx-auto mb-12">
+      Ved å støtte Spikkestad Skiarena bidrar din bedrift direkte til
+      utviklingen av anlegget og til skiglede for barn og unge i
+      <strong>IL ROS</strong>. Under finner du våre sponsormuligheter.
+    </p>
+
+    <!-- Reklameplass i Skihytta -->
+    <section class="mb-16">
+      <h2 class="text-2xl font-bold text-gray-900 mb-4">Reklameplass i Skihytta</h2>
+      <p class="text-gray-700 leading-relaxed mb-8">
+        Skihytta på Spikkestad er samlingspunktet for skigruppa – her møtes
+        utøvere, trenere og foreldre gjennom hele sesongen. Vi tilbyr
+        reklameplass på veggen i hytta, i ulike størrelser og plasseringer.
+        Alle priser under er <strong>foreløpige</strong> og justeres i dialog
+        med interesserte bedrifter.
+      </p>
+
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+        {reklamepakker.map((pakke) => (
+          <div class="bg-white rounded-xl shadow-md p-6 flex flex-col text-center border border-gray-100">
+            <h3 class="text-xl font-semibold text-gray-900 mb-1">{pakke.navn}</h3>
+            <p class="text-blue-700 font-bold text-lg mb-3">{pakke.pris}</p>
+            <p class="text-gray-600 flex-1">{pakke.beskrivelse}</p>
+          </div>
+        ))}
+      </div>
+    </section>
+
+    <!-- Lysstolper i marka -->
+    <section class="mb-16">
+      <h2 class="text-2xl font-bold text-gray-900 mb-4">Lysstolper i marka</h2>
+      <p class="text-gray-700 leading-relaxed mb-4">
+        Vi har lansert et forslag om å selge lysstolper innover i løypenettet
+        i marka. Ved å støtte en eller flere lysstolper er din bedrift med på
+        å gi bedre og tryggere lysforhold for alle som trener og går tur i
+        Kjekstadmarka – samtidig som bedriften kan få synlig merking på
+        stolpen.
+      </p>
+      <div class="bg-blue-50 rounded-xl border border-blue-100 p-6 md:p-8">
+        <p class="text-gray-700 mb-2">
+          <strong>Status:</strong> Dette er foreløpig et forslag under
+          planlegging. Nøyaktig antall stolper, plassering og pris per
+          stolpe fastsettes i samarbeid med kommune og lokale myndigheter.
+        </p>
+        <p class="text-gray-700">
+          Er din bedrift interessert i å bidra? Ta gjerne kontakt allerede
+          nå, så holder vi deg oppdatert etter hvert som prosjektet
+          konkretiseres.
+        </p>
+      </div>
+    </section>
+
+    <section class="text-center">
+      <h2 class="text-2xl font-semibold text-gray-800 mb-3">Interessert?</h2>
+      <p class="text-gray-700 mb-6">
+        Ta kontakt med oss for å diskutere reklameplass, lysstolper eller
+        andre måter å samarbeide med Spikkestad Skiarena på.
+      </p>
+      <a
+        href="/kontakt"
+        class="inline-block bg-green-600 text-white font-semibold py-3 px-6 rounded-lg shadow-md hover:bg-green-700 transition">
+        Kontakt oss
+      </a>
+    </section>
+  </main>
+
+  <Footer />
+</BaseLayout>
