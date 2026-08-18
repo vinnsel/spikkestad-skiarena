@@ -1,0 +1,574 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import Navbar from "../components/Navbar.astro";
+import Footer from "../components/Footer.astro";
+import "../styles/tailwind.css";
+import poles from "../data/poles.json";
+---
+
+<BaseLayout title="Stolperegisteret – Spikkestad Skiarena">
+  <Navbar />
+
+  <main class="stolpe-page pt-24 pb-16 px-6">
+    <div class="wrap">
+      <header class="top">
+        <div class="eyebrow">Spikkestad Skiarena · IL ROS Ski</div>
+        <h1>Stolperegisteret</h1>
+        <p class="lede">
+          Hver lyktstolpe i ROS-løypa kan bære et navn. Klikk deg gjennom
+          kartet eller registeret for å se hvem som støtter løypa – og
+          hvilke stolper som fortsatt venter på en sponsor.
+        </p>
+        <div class="demo-note">
+          💡 <strong>Eksempel:</strong> kartet er ekte, men navn og status
+          under er illustrasjonsdata – ikke reelle sponsorer ennå. Vil du
+          sponse en ekte stolpe? Se
+          <a href="/sponsorpakker">sponsorsiden</a>.
+        </div>
+      </header>
+
+      <div class="statbar">
+        <div class="figure">
+          <span class="n moss" id="statSponset">–</span>
+          <span class="lbl">Sponset</span>
+        </div>
+        <div class="figure">
+          <span class="n amber" id="statLedig">–</span>
+          <span class="lbl">Ledige</span>
+        </div>
+        <div class="progress-col">
+          <div class="progress-track"><div class="progress-fill" id="progressFill" style="width:0%"></div></div>
+          <div class="progress-label" id="progressLabel">Laster…</div>
+        </div>
+      </div>
+
+      <div class="layout">
+        <section class="panel">
+          <div class="panel-head">
+            <h2>Løypekart</h2>
+            <div class="legend">
+              <span><span class="dot moss"></span> Sponset</span>
+              <span><span class="dot amber"></span> Ledig</span>
+            </div>
+          </div>
+          <div class="map-stage" id="mapStage">
+            <img src="/images/kart.png" alt="Kart over ROS-løypa med nummererte lyktstolper" draggable="false" />
+            <div class="popover" id="popover">
+              <button class="pv-close" id="pvClose" aria-label="Lukk">✕</button>
+              <div class="pv-head">
+                <span class="pv-num" id="pvNum">STOLPE #—</span>
+                <span class="pill" id="pvPill">—</span>
+              </div>
+              <p class="pv-name" id="pvName">—</p>
+              <p class="pv-type" id="pvType"></p>
+              <a class="pv-cta" id="pvCta" href="#">Spons denne stolpen</a>
+              <p class="pv-thanks" id="pvThanks" style="display:none">Takk for støtten til ROS-løypa! 🎿</p>
+            </div>
+          </div>
+        </section>
+
+        <section class="panel">
+          <div class="panel-head">
+            <h2>Register</h2>
+            <span class="count-label" id="listCount">41 stolper</span>
+          </div>
+          <div class="list-tools">
+            <div class="chips">
+              <button class="chip active" data-filter="alle">Alle</button>
+              <button class="chip" data-filter="ledig">Ledig</button>
+              <button class="chip" data-filter="sponset">Sponset</button>
+            </div>
+            <input class="search" type="text" id="searchInput" placeholder="Søk på navn …" />
+          </div>
+          <div class="list" id="listBody"></div>
+        </section>
+      </div>
+
+      <p class="foot-note">
+        Vil du sponse en lysstolpe for ekte? Les mer på
+        <a href="/sponsorpakker">sponsorsiden</a> eller ta kontakt på
+        <a href="mailto:ski@ilros.no">ski@ilros.no</a>.
+      </p>
+    </div>
+  </main>
+
+  <Footer />
+</BaseLayout>
+
+<style is:global>
+  .stolpe-page {
+    --font-display: Charter, "Iowan Old Style", "Palatino Linotype", Georgia, serif;
+    --font-mono: "SF Mono", ui-monospace, Menlo, Consolas, monospace;
+
+    --bg: #f3efe2;
+    --surface: #fffdf7;
+    --surface-2: #ece6d3;
+    --ink: #241f16;
+    --ink-soft: #5b5340;
+    --line: rgba(36, 31, 22, 0.14);
+    --moss: #3f6a37;
+    --moss-deep: #2a4a25;
+    --moss-soft: rgba(63, 106, 55, 0.14);
+    --amber: #a76c1a;
+    --amber-soft: rgba(167, 108, 26, 0.16);
+    --shadow: rgba(36, 31, 22, 0.18);
+    --pin-ring: rgba(36, 31, 22, 0.35);
+
+    background: var(--bg);
+    color: var(--ink);
+  }
+
+
+  .stolpe-page .wrap { max-width: 1180px; margin: 0 auto; }
+
+  .stolpe-page .top { display: flex; flex-direction: column; gap: 0.9rem; margin-bottom: 1.4rem; }
+
+  .stolpe-page .eyebrow {
+    font-family: var(--font-mono);
+    font-size: 0.72rem;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--moss);
+    font-weight: 600;
+  }
+
+  .stolpe-page h1 {
+    font-family: var(--font-display);
+    font-weight: 600;
+    font-size: clamp(1.7rem, 3.4vw, 2.5rem);
+    margin: 0;
+    text-wrap: balance;
+    letter-spacing: -0.01em;
+  }
+
+  .stolpe-page .lede {
+    font-size: 1rem;
+    line-height: 1.55;
+    color: var(--ink-soft);
+    max-width: 62ch;
+    margin: 0;
+  }
+
+  .stolpe-page .demo-note {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    flex-wrap: wrap;
+    font-size: 0.82rem;
+    color: var(--ink-soft);
+    background: var(--surface-2);
+    border: 1px solid var(--line);
+    border-radius: 999px;
+    padding: 0.4rem 0.85rem;
+    width: fit-content;
+  }
+  .stolpe-page .demo-note strong { color: var(--ink); font-weight: 600; }
+  .stolpe-page .demo-note a { color: var(--moss-deep); }
+
+  .stolpe-page .statbar {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 1.4rem;
+    background: var(--surface);
+    border: 1px solid var(--line);
+    border-radius: 14px;
+    padding: 1rem 1.3rem;
+    box-shadow: 0 1px 2px var(--shadow);
+  }
+
+  .stolpe-page .statbar .figure { display: flex; flex-direction: column; gap: 0.15rem; min-width: 5.5rem; }
+  .stolpe-page .statbar .figure .n {
+    font-family: var(--font-mono);
+    font-variant-numeric: tabular-nums;
+    font-size: 1.5rem;
+    font-weight: 600;
+    line-height: 1;
+  }
+  .stolpe-page .statbar .figure .n.moss { color: var(--moss); }
+  .stolpe-page .statbar .figure .n.amber { color: var(--amber); }
+  .stolpe-page .statbar .figure .lbl {
+    font-size: 0.72rem;
+    color: var(--ink-soft);
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+  }
+
+  .stolpe-page .progress-col { flex: 1; min-width: 200px; }
+  .stolpe-page .progress-track {
+    height: 10px;
+    border-radius: 999px;
+    background: var(--surface-2);
+    overflow: hidden;
+    border: 1px solid var(--line);
+  }
+  .stolpe-page .progress-fill {
+    height: 100%;
+    background: linear-gradient(90deg, var(--moss-deep), var(--moss));
+    border-radius: 999px;
+    transition: width 0.5s ease;
+  }
+  .stolpe-page .progress-label {
+    margin-top: 0.4rem;
+    font-size: 0.78rem;
+    color: var(--ink-soft);
+    font-family: var(--font-mono);
+    font-variant-numeric: tabular-nums;
+  }
+
+  .stolpe-page .layout {
+    display: grid;
+    grid-template-columns: minmax(0, 1.5fr) minmax(280px, 1fr);
+    gap: 1.25rem;
+    margin-top: 1.4rem;
+    align-items: start;
+  }
+  @media (max-width: 860px) {
+    .stolpe-page .layout { grid-template-columns: 1fr; }
+  }
+
+  .stolpe-page .panel {
+    background: var(--surface);
+    border: 1px solid var(--line);
+    border-radius: 16px;
+    box-shadow: 0 1px 3px var(--shadow);
+    overflow: hidden;
+  }
+
+  .stolpe-page .panel-head {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.75rem;
+    padding: 0.9rem 1.1rem;
+    border-bottom: 1px solid var(--line);
+  }
+  .stolpe-page .panel-head h2 {
+    font-family: var(--font-display);
+    font-size: 1.05rem;
+    margin: 0;
+    font-weight: 600;
+  }
+  .stolpe-page .count-label { font-size: 0.78rem; color: var(--ink-soft); }
+  .stolpe-page .legend { display: flex; gap: 0.9rem; font-size: 0.76rem; color: var(--ink-soft); }
+  .stolpe-page .legend span { display: inline-flex; align-items: center; gap: 0.35rem; }
+  .stolpe-page .dot { width: 9px; height: 9px; border-radius: 50%; display: inline-block; }
+  .stolpe-page .dot.moss { background: var(--moss); }
+  .stolpe-page .dot.amber { background: transparent; border: 2px solid var(--amber); width: 7px; height: 7px; }
+
+  .stolpe-page .map-stage {
+    position: relative;
+    width: 100%;
+    aspect-ratio: 836 / 1134;
+    background: var(--surface-2);
+    overflow: hidden;
+  }
+  .stolpe-page .map-stage img {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    display: block;
+    object-fit: cover;
+    user-select: none;
+    -webkit-user-drag: none;
+  }
+
+  .stolpe-page .pin {
+    position: absolute;
+    width: 15px;
+    height: 15px;
+    margin: -7.5px 0 0 -7.5px;
+    border-radius: 50%;
+    border: 2px solid var(--surface);
+    cursor: pointer;
+    padding: 0;
+    box-shadow: 0 1px 3px var(--shadow);
+    transition: transform 0.15s ease, box-shadow 0.15s ease;
+  }
+  .stolpe-page .pin:hover, .stolpe-page .pin:focus-visible { transform: scale(1.35); z-index: 5; outline: none; }
+  .stolpe-page .pin.sponset { background: var(--moss); }
+  .stolpe-page .pin.ledig { background: var(--amber); opacity: 0.92; }
+  .stolpe-page .pin.ledig::after {
+    content: "";
+    position: absolute;
+    inset: -6px;
+    border-radius: 50%;
+    border: 1.5px solid var(--amber);
+    opacity: 0.55;
+    animation: stolpe-pulse 2.6s ease-out infinite;
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .stolpe-page .pin.ledig::after { animation: none; }
+  }
+  @keyframes stolpe-pulse {
+    0% { transform: scale(0.7); opacity: 0.6; }
+    100% { transform: scale(1.9); opacity: 0; }
+  }
+  .stolpe-page .pin.selected {
+    box-shadow: 0 0 0 3px var(--pin-ring), 0 1px 3px var(--shadow);
+    transform: scale(1.4);
+    z-index: 6;
+  }
+
+  .stolpe-page .popover {
+    position: absolute;
+    z-index: 10;
+    width: 220px;
+    background: var(--surface);
+    border: 1px solid var(--line);
+    border-radius: 12px;
+    box-shadow: 0 8px 24px var(--shadow);
+    padding: 0.85rem 0.95rem;
+    font-size: 0.85rem;
+    display: none;
+  }
+  .stolpe-page .popover.open { display: block; }
+  .stolpe-page .popover .pv-head { display: flex; align-items: baseline; justify-content: space-between; gap: 0.5rem; margin-bottom: 0.4rem; }
+  .stolpe-page .popover .pv-num { font-family: var(--font-mono); font-size: 0.72rem; color: var(--ink-soft); letter-spacing: 0.04em; }
+  .stolpe-page .pill { display: inline-block; font-size: 0.68rem; font-weight: 600; letter-spacing: 0.03em; padding: 0.15rem 0.5rem; border-radius: 999px; }
+  .stolpe-page .pill.sponset { background: var(--moss-soft); color: var(--moss-deep); }
+  .stolpe-page .pill.ledig { background: var(--amber-soft); color: var(--amber); }
+  .stolpe-page .popover .pv-name { font-family: var(--font-display); font-size: 1rem; font-weight: 600; margin: 0.15rem 0 0.15rem; text-wrap: balance; }
+  .stolpe-page .popover .pv-type { color: var(--ink-soft); font-size: 0.78rem; margin-bottom: 0.55rem; }
+  .stolpe-page .popover .pv-cta {
+    display: inline-block;
+    width: 100%;
+    text-align: center;
+    background: var(--amber);
+    color: #1c1204;
+    font-weight: 600;
+    font-size: 0.8rem;
+    padding: 0.5rem 0.6rem;
+    border-radius: 8px;
+    text-decoration: none;
+    box-sizing: border-box;
+  }
+  .stolpe-page .popover .pv-cta:hover { filter: brightness(1.06); }
+  .stolpe-page .popover .pv-thanks { color: var(--ink-soft); font-size: 0.78rem; margin: 0; }
+  .stolpe-page .popover .pv-close {
+    position: absolute;
+    top: 0.5rem;
+    right: 0.6rem;
+    background: none;
+    border: none;
+    color: var(--ink-soft);
+    font-size: 0.95rem;
+    cursor: pointer;
+    line-height: 1;
+    padding: 0.15rem;
+  }
+
+  .stolpe-page .list-tools { padding: 0.85rem 1.1rem; border-bottom: 1px solid var(--line); display: flex; flex-direction: column; gap: 0.6rem; }
+  .stolpe-page .chips { display: flex; gap: 0.4rem; flex-wrap: wrap; }
+  .stolpe-page .chip {
+    font-size: 0.78rem;
+    border: 1px solid var(--line);
+    background: var(--surface-2);
+    color: var(--ink-soft);
+    border-radius: 999px;
+    padding: 0.32rem 0.75rem;
+    cursor: pointer;
+    font-weight: 500;
+  }
+  .stolpe-page .chip.active { background: var(--moss); border-color: var(--moss); color: #fff; }
+  .stolpe-page .search {
+    width: 100%;
+    border: 1px solid var(--line);
+    background: var(--surface-2);
+    color: var(--ink);
+    border-radius: 8px;
+    padding: 0.5rem 0.7rem;
+    font-size: 0.85rem;
+    box-sizing: border-box;
+  }
+  .stolpe-page .search::placeholder { color: var(--ink-soft); }
+
+  .stolpe-page .list { max-height: 560px; overflow-y: auto; }
+  .stolpe-page .row { display: flex; align-items: center; gap: 0.7rem; padding: 0.6rem 1.1rem; border-bottom: 1px solid var(--line); cursor: pointer; }
+  .stolpe-page .row:hover, .stolpe-page .row.selected { background: var(--surface-2); }
+  .stolpe-page .row .num { font-family: var(--font-mono); font-size: 0.75rem; color: var(--ink-soft); width: 1.6rem; flex-shrink: 0; font-variant-numeric: tabular-nums; }
+  .stolpe-page .row .rdot { width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0; }
+  .stolpe-page .row .rdot.sponset { background: var(--moss); }
+  .stolpe-page .row .rdot.ledig { background: transparent; border: 2px solid var(--amber); }
+  .stolpe-page .row .info { flex: 1; min-width: 0; }
+  .stolpe-page .row .rname { font-size: 0.86rem; font-weight: 500; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .stolpe-page .row .rtype { font-size: 0.72rem; color: var(--ink-soft); }
+  .stolpe-page .row .rcta { font-size: 0.72rem; color: var(--amber); font-weight: 600; flex-shrink: 0; }
+  .stolpe-page .empty { padding: 2rem 1.1rem; text-align: center; color: var(--ink-soft); font-size: 0.85rem; }
+
+  .stolpe-page .foot-note { margin-top: 1.6rem; font-size: 0.8rem; color: var(--ink-soft); line-height: 1.6; }
+  .stolpe-page .foot-note a { color: var(--moss-deep); }
+</style>
+
+<script define:vars={{ poles }}>
+  const POLES = poles;
+
+  const TYPE_LABEL = {
+    privatperson: "Privatperson / familie",
+    bedrift: "Bedrift",
+    lag: "Lag / gruppe",
+  };
+
+  const mapStage = document.getElementById('mapStage');
+  const listBody = document.getElementById('listBody');
+  const popover = document.getElementById('popover');
+  const searchInput = document.getElementById('searchInput');
+  const listCount = document.getElementById('listCount');
+
+  let activeFilter = 'alle';
+  let searchTerm = '';
+
+  function renderPins() {
+    POLES.forEach((p) => {
+      const btn = document.createElement('button');
+      btn.className = 'pin ' + p.status;
+      btn.style.left = p.xPct + '%';
+      btn.style.top = p.yPct + '%';
+      btn.dataset.num = p.num;
+      btn.setAttribute('aria-label', 'Stolpe ' + p.num + (p.status === 'sponset' ? ', sponset av ' + p.navn : ', ledig'));
+      btn.addEventListener('click', (e) => {
+        e.stopPropagation();
+        selectPole(p.num, btn);
+      });
+      mapStage.appendChild(btn);
+    });
+  }
+
+  function selectPole(num, pinEl) {
+    document.querySelectorAll('.pin').forEach((el) => el.classList.remove('selected'));
+    document.querySelectorAll('.row').forEach((el) => el.classList.remove('selected'));
+
+    const pin = pinEl || mapStage.querySelector('.pin[data-num="' + num + '"]');
+    if (pin) pin.classList.add('selected');
+    const row = listBody.querySelector('.row[data-num="' + num + '"]');
+    if (row) {
+      row.classList.add('selected');
+      row.scrollIntoView({ block: 'nearest', behavior: 'smooth' });
+    }
+    if (pin) openPopover(num, pin);
+  }
+
+  function openPopover(num, pinEl) {
+    const p = POLES.find((x) => x.num === num);
+    if (!p) return;
+
+    document.getElementById('pvNum').textContent = 'STOLPE #' + p.num;
+    const pill = document.getElementById('pvPill');
+    pill.textContent = p.status === 'sponset' ? 'Sponset' : 'Ledig';
+    pill.className = 'pill ' + p.status;
+
+    const nameEl = document.getElementById('pvName');
+    const typeEl = document.getElementById('pvType');
+    const cta = document.getElementById('pvCta');
+    const thanks = document.getElementById('pvThanks');
+
+    if (p.status === 'sponset') {
+      nameEl.textContent = p.navn;
+      typeEl.textContent = TYPE_LABEL[p.type] || '';
+      cta.style.display = 'none';
+      thanks.style.display = 'block';
+    } else {
+      nameEl.textContent = 'Denne stolpen er ledig';
+      typeEl.textContent = 'Bli den første til å sette navn på stolpe #' + p.num;
+      cta.style.display = 'block';
+      cta.href =
+        'mailto:ski@ilros.no?subject=' +
+        encodeURIComponent('Sponsing av lyktstolpe #' + p.num) +
+        '&body=' +
+        encodeURIComponent('Hei!\n\nJeg ønsker å sponse lyktstolpe #' + p.num + ' i ROS-løypa.\n\nNavn/bedrift:\n');
+      thanks.style.display = 'none';
+    }
+
+    const stageRect = mapStage.getBoundingClientRect();
+    const pinRect = pinEl.getBoundingClientRect();
+    let left = pinRect.left - stageRect.left + pinRect.width / 2 - 110;
+    let top = pinRect.top - stageRect.top + pinRect.height + 10;
+    left = Math.max(8, Math.min(left, stageRect.width - 228));
+    if (top + 150 > stageRect.height) {
+      top = pinRect.top - stageRect.top - 160;
+    }
+    popover.style.left = left + 'px';
+    popover.style.top = top + 'px';
+    popover.classList.add('open');
+  }
+
+  document.getElementById('pvClose').addEventListener('click', () => {
+    popover.classList.remove('open');
+    document.querySelectorAll('.pin').forEach((el) => el.classList.remove('selected'));
+    document.querySelectorAll('.row').forEach((el) => el.classList.remove('selected'));
+  });
+
+  mapStage.addEventListener('click', (e) => {
+    if (e.target === mapStage || e.target.tagName === 'IMG') {
+      popover.classList.remove('open');
+      document.querySelectorAll('.pin').forEach((el) => el.classList.remove('selected'));
+      document.querySelectorAll('.row').forEach((el) => el.classList.remove('selected'));
+    }
+  });
+
+  function renderList() {
+    const term = searchTerm.trim().toLowerCase();
+    const filtered = POLES.filter((p) => {
+      if (activeFilter === 'ledig' && p.status !== 'ledig') return false;
+      if (activeFilter === 'sponset' && p.status !== 'sponset') return false;
+      if (term && !(p.navn || '').toLowerCase().includes(term) && !('stolpe ' + p.num).includes(term)) return false;
+      return true;
+    });
+
+    listBody.innerHTML = '';
+    listCount.textContent = filtered.length + ' av ' + POLES.length + ' stolper';
+
+    if (filtered.length === 0) {
+      const empty = document.createElement('div');
+      empty.className = 'empty';
+      empty.textContent = 'Ingen stolper matcher søket.';
+      listBody.appendChild(empty);
+      return;
+    }
+
+    filtered.forEach((p) => {
+      const row = document.createElement('div');
+      row.className = 'row';
+      row.dataset.num = p.num;
+      row.innerHTML =
+        '<span class="num">#' + String(p.num).padStart(2, '0') + '</span>' +
+        '<span class="rdot ' + p.status + '"></span>' +
+        '<span class="info">' +
+        '<span class="rname">' + (p.status === 'sponset' ? p.navn : 'Ledig stolpe') + '</span><br/>' +
+        '<span class="rtype">' + (p.status === 'sponset' ? TYPE_LABEL[p.type] || '' : 'Ingen sponsor ennå') + '</span>' +
+        '</span>' +
+        (p.status === 'ledig' ? '<span class="rcta">Spons →</span>' : '');
+      row.addEventListener('click', () => selectPole(p.num));
+      listBody.appendChild(row);
+    });
+  }
+
+  document.querySelectorAll('.chip').forEach((chip) => {
+    chip.addEventListener('click', () => {
+      document.querySelectorAll('.chip').forEach((c) => c.classList.remove('active'));
+      chip.classList.add('active');
+      activeFilter = chip.dataset.filter;
+      renderList();
+    });
+  });
+
+  searchInput.addEventListener('input', (e) => {
+    searchTerm = e.target.value;
+    renderList();
+  });
+
+  function renderStats() {
+    const sponset = POLES.filter((p) => p.status === 'sponset').length;
+    const ledig = POLES.length - sponset;
+    document.getElementById('statSponset').textContent = sponset;
+    document.getElementById('statLedig').textContent = ledig;
+    const pct = Math.round((sponset / POLES.length) * 100);
+    document.getElementById('progressFill').style.width = pct + '%';
+    document.getElementById('progressLabel').textContent = sponset + ' av ' + POLES.length + ' stolper sponset (' + pct + ' %)';
+  }
+
+  renderPins();
+  renderList();
+  renderStats();
+</script>
