@@ -1,0 +1,65 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import Navbar from "../components/Navbar.astro";
+import Footer from "../components/Footer.astro";
+import "../styles/tailwind.css";
+
+const arrangementer = [
+  {
+    dag: "14",
+    maned: "FEB",
+    ar: "2027",
+    navn: "Kjekstadmarka Rundt",
+    beskrivelse:
+      "Turrenn i fristil for skøyteentusiaster – start og mål på Spikkestad Skiarena. Åpent for alle nivåer.",
+    lenke: "https://kjekstadmarkarundt.no",
+    lenkeTekst: "Se løypa og meld deg på",
+  },
+];
+---
+
+<BaseLayout title="Hva skjer – Spikkestad Skiarena">
+  <Navbar />
+
+  <main class="max-w-4xl mx-auto pt-24 pb-16 px-6">
+    <span class="block text-center">
+      <span class="inline-block bg-ros-orange text-white text-xs font-bold tracking-wide uppercase px-3 py-1 rounded-full mb-4">
+        Spikkestad Skiarena
+      </span>
+    </span>
+    <h1 class="text-xl md:text-4xl font-extrabold text-center mb-6 text-ros-ink">
+      Hva skjer
+    </h1>
+    <p class="text-lg text-ros-slate text-center max-w-2xl mx-auto mb-10">
+      Kommende arrangementer på og rundt Spikkestad Skiarena.
+    </p>
+
+    <div class="space-y-6">
+      {arrangementer.map((a) => (
+        <div class="bg-white rounded-xl shadow-md overflow-hidden flex flex-col sm:flex-row border-t-4 border-ros-blue">
+          <div class="bg-ros-orange text-white flex sm:flex-col items-center justify-center gap-2 sm:gap-0 py-4 sm:py-6 sm:w-32 shrink-0">
+            <span class="text-3xl sm:text-4xl font-extrabold leading-none">{a.dag}</span>
+            <span class="text-sm font-bold tracking-wide uppercase">{a.maned} {a.ar}</span>
+          </div>
+          <div class="p-6 sm:p-8 flex-1">
+            <h2 class="text-xl font-bold text-ros-ink mb-2">{a.navn}</h2>
+            <p class="text-ros-slate leading-relaxed mb-4">{a.beskrivelse}</p>
+            <a
+              href={a.lenke}
+              target="_blank"
+              rel="noopener noreferrer"
+              class="inline-block bg-ros-blue text-white font-semibold py-2.5 px-5 rounded-lg shadow-sm hover:bg-ros-blue-dark transition text-sm">
+              {a.lenkeTekst} →
+            </a>
+          </div>
+        </div>
+      ))}
+    </div>
+
+    <p class="text-ros-slate text-sm text-center mt-10">
+      Flere arrangementer kommer etter hvert som de planlegges.
+    </p>
+  </main>
+
+  <Footer />
+</BaseLayout>
