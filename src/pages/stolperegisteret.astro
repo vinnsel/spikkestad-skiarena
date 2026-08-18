@@ -12,7 +12,7 @@ import poles from "../data/poles.json";
   <main class="stolpe-page pt-24 pb-16 px-6">
     <div class="wrap">
       <header class="top">
-        <div class="eyebrow">Spikkestad Skiarena · IL ROS Ski</div>
+        <span class="eyebrow">Spikkestad Skiarena</span>
         <h1>Stolperegisteret</h1>
         <p class="lede">
           Hver lyktstolpe i ROS-løypa kan bære et navn. Klikk deg gjennom
@@ -97,22 +97,19 @@ import poles from "../data/poles.json";
 
 <style is:global>
   .stolpe-page {
-    --font-display: Charter, "Iowan Old Style", "Palatino Linotype", Georgia, serif;
-    --font-mono: "SF Mono", ui-monospace, Menlo, Consolas, monospace;
-
-    --bg: #f3efe2;
-    --surface: #fffdf7;
-    --surface-2: #ece6d3;
-    --ink: #241f16;
-    --ink-soft: #5b5340;
-    --line: rgba(36, 31, 22, 0.14);
-    --moss: #3f6a37;
-    --moss-deep: #2a4a25;
-    --moss-soft: rgba(63, 106, 55, 0.14);
-    --amber: #a76c1a;
-    --amber-soft: rgba(167, 108, 26, 0.16);
-    --shadow: rgba(36, 31, 22, 0.18);
-    --pin-ring: rgba(36, 31, 22, 0.35);
+    --bg: #eef1f6;
+    --surface: #ffffff;
+    --surface-2: #e8eff6;
+    --ink: #13223b;
+    --ink-soft: #556075;
+    --line: rgba(19, 34, 59, 0.12);
+    --moss: #005097;
+    --moss-deep: #003c72;
+    --moss-soft: #e8eff6;
+    --amber: #ed6c0c;
+    --amber-soft: #fceada;
+    --shadow: rgba(19, 34, 59, 0.14);
+    --pin-ring: rgba(19, 34, 59, 0.35);
 
     background: var(--bg);
     color: var(--ink);
@@ -124,17 +121,20 @@ import poles from "../data/poles.json";
   .stolpe-page .top { display: flex; flex-direction: column; gap: 0.9rem; margin-bottom: 1.4rem; }
 
   .stolpe-page .eyebrow {
-    font-family: var(--font-mono);
+    display: inline-block;
+    width: fit-content;
     font-size: 0.72rem;
-    letter-spacing: 0.14em;
+    letter-spacing: 0.06em;
     text-transform: uppercase;
-    color: var(--moss);
-    font-weight: 600;
+    color: #fff;
+    background: var(--amber);
+    font-weight: 700;
+    padding: 0.3rem 0.85rem;
+    border-radius: 999px;
   }
 
   .stolpe-page h1 {
-    font-family: var(--font-display);
-    font-weight: 600;
+    font-weight: 800;
     font-size: clamp(1.7rem, 3.4vw, 2.5rem);
     margin: 0;
     text-wrap: balance;
@@ -163,7 +163,7 @@ import poles from "../data/poles.json";
     width: fit-content;
   }
   .stolpe-page .demo-note strong { color: var(--ink); font-weight: 600; }
-  .stolpe-page .demo-note a { color: var(--moss-deep); }
+  .stolpe-page .demo-note a { color: var(--moss); font-weight: 600; }
 
   .stolpe-page .statbar {
     display: flex;
@@ -172,17 +172,17 @@ import poles from "../data/poles.json";
     gap: 1.4rem;
     background: var(--surface);
     border: 1px solid var(--line);
-    border-radius: 14px;
+    border-top: 4px solid var(--moss);
+    border-radius: 12px;
     padding: 1rem 1.3rem;
     box-shadow: 0 1px 2px var(--shadow);
   }
 
   .stolpe-page .statbar .figure { display: flex; flex-direction: column; gap: 0.15rem; min-width: 5.5rem; }
   .stolpe-page .statbar .figure .n {
-    font-family: var(--font-mono);
     font-variant-numeric: tabular-nums;
     font-size: 1.5rem;
-    font-weight: 600;
+    font-weight: 800;
     line-height: 1;
   }
   .stolpe-page .statbar .figure .n.moss { color: var(--moss); }
@@ -212,7 +212,6 @@ import poles from "../data/poles.json";
     margin-top: 0.4rem;
     font-size: 0.78rem;
     color: var(--ink-soft);
-    font-family: var(--font-mono);
     font-variant-numeric: tabular-nums;
   }
 
@@ -230,7 +229,8 @@ import poles from "../data/poles.json";
   .stolpe-page .panel {
     background: var(--surface);
     border: 1px solid var(--line);
-    border-radius: 16px;
+    border-top: 4px solid var(--moss);
+    border-radius: 12px;
     box-shadow: 0 1px 3px var(--shadow);
     overflow: hidden;
   }
@@ -244,10 +244,9 @@ import poles from "../data/poles.json";
     border-bottom: 1px solid var(--line);
   }
   .stolpe-page .panel-head h2 {
-    font-family: var(--font-display);
     font-size: 1.05rem;
     margin: 0;
-    font-weight: 600;
+    font-weight: 800;
   }
   .stolpe-page .count-label { font-size: 0.78rem; color: var(--ink-soft); }
   .stolpe-page .legend { display: flex; gap: 0.9rem; font-size: 0.76rem; color: var(--ink-soft); }
@@ -325,18 +324,18 @@ import poles from "../data/poles.json";
   }
   .stolpe-page .popover.open { display: block; }
   .stolpe-page .popover .pv-head { display: flex; align-items: baseline; justify-content: space-between; gap: 0.5rem; margin-bottom: 0.4rem; }
-  .stolpe-page .popover .pv-num { font-family: var(--font-mono); font-size: 0.72rem; color: var(--ink-soft); letter-spacing: 0.04em; }
-  .stolpe-page .pill { display: inline-block; font-size: 0.68rem; font-weight: 600; letter-spacing: 0.03em; padding: 0.15rem 0.5rem; border-radius: 999px; }
+  .stolpe-page .popover .pv-num { font-size: 0.72rem; color: var(--ink-soft); letter-spacing: 0.04em; font-weight: 600; }
+  .stolpe-page .pill { display: inline-block; font-size: 0.68rem; font-weight: 700; letter-spacing: 0.03em; padding: 0.15rem 0.5rem; border-radius: 999px; }
   .stolpe-page .pill.sponset { background: var(--moss-soft); color: var(--moss-deep); }
   .stolpe-page .pill.ledig { background: var(--amber-soft); color: var(--amber); }
-  .stolpe-page .popover .pv-name { font-family: var(--font-display); font-size: 1rem; font-weight: 600; margin: 0.15rem 0 0.15rem; text-wrap: balance; }
+  .stolpe-page .popover .pv-name { font-size: 1rem; font-weight: 700; margin: 0.15rem 0 0.15rem; text-wrap: balance; }
   .stolpe-page .popover .pv-type { color: var(--ink-soft); font-size: 0.78rem; margin-bottom: 0.55rem; }
   .stolpe-page .popover .pv-cta {
     display: inline-block;
     width: 100%;
     text-align: center;
     background: var(--amber);
-    color: #1c1204;
+    color: #fff;
     font-weight: 600;
     font-size: 0.8rem;
     padding: 0.5rem 0.6rem;
@@ -344,7 +343,7 @@ import poles from "../data/poles.json";
     text-decoration: none;
     box-sizing: border-box;
   }
-  .stolpe-page .popover .pv-cta:hover { filter: brightness(1.06); }
+  .stolpe-page .popover .pv-cta:hover { background: #c6570a; }
   .stolpe-page .popover .pv-thanks { color: var(--ink-soft); font-size: 0.78rem; margin: 0; }
   .stolpe-page .popover .pv-close {
     position: absolute;
@@ -387,7 +386,7 @@ import poles from "../data/poles.json";
   .stolpe-page .list { max-height: 560px; overflow-y: auto; }
   .stolpe-page .row { display: flex; align-items: center; gap: 0.7rem; padding: 0.6rem 1.1rem; border-bottom: 1px solid var(--line); cursor: pointer; }
   .stolpe-page .row:hover, .stolpe-page .row.selected { background: var(--surface-2); }
-  .stolpe-page .row .num { font-family: var(--font-mono); font-size: 0.75rem; color: var(--ink-soft); width: 1.6rem; flex-shrink: 0; font-variant-numeric: tabular-nums; }
+  .stolpe-page .row .num { font-size: 0.75rem; color: var(--ink-soft); width: 1.6rem; flex-shrink: 0; font-variant-numeric: tabular-nums; font-weight: 600; }
   .stolpe-page .row .rdot { width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0; }
   .stolpe-page .row .rdot.sponset { background: var(--moss); }
   .stolpe-page .row .rdot.ledig { background: transparent; border: 2px solid var(--amber); }
