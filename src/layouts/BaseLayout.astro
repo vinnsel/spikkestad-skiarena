@@ -10,9 +10,10 @@ const { title = "Spikkestad Skiarena" } = Astro.props;
       name="description"
       content="Spikkestad Skiarena – hjemmebane for IL ROS Ski. Følg utviklingen av stadion, bli samarbeidspartner og støtt skigruppa."
     />
+    <link rel="icon" type="image/png" href="/images/logoILROS.png" />
     <title>{title}</title>
   </head>
-  <body>
+  <body class="bg-ros-bg">
     <slot />
   </body>
 </html>

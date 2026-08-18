@@ -64,32 +64,37 @@ const hvemKanSponse = [
   <Navbar />
 
   <main class="max-w-4xl mx-auto pt-24 pb-16 px-6">
-    <h1 class="text-xl md:text-4xl font-extrabold text-center mb-8 text-gray-900">
+    <span class="block text-center">
+      <span class="inline-block bg-ros-orange text-white text-xs font-bold tracking-wide uppercase px-3 py-1 rounded-full mb-4">
+        Spikkestad Skiarena
+      </span>
+    </span>
+    <h1 class="text-xl md:text-4xl font-extrabold text-center mb-8 text-ros-ink">
       Reklameplasser & lysstolper
     </h1>
-    <p class="text-lg text-gray-700 text-center max-w-2xl mx-auto mb-12">
+    <p class="text-lg text-ros-slate text-center max-w-2xl mx-auto mb-12">
       Ved å støtte Spikkestad Skiarena bidrar din bedrift direkte til
       utviklingen av anlegget og til skiglede for barn og unge i
-      <strong>IL ROS</strong>. Under finner du våre sponsormuligheter.
+      <strong class="text-ros-ink">IL ROS</strong>. Under finner du våre sponsormuligheter.
     </p>
 
     <!-- Reklameplass i Skihytta -->
     <section class="mb-16">
-      <h2 class="text-2xl font-bold text-gray-900 mb-4">Reklameplass i Skihytta</h2>
-      <p class="text-gray-700 leading-relaxed mb-8">
+      <h2 class="text-2xl font-bold text-ros-ink mb-4">Reklameplass i Skihytta</h2>
+      <p class="text-ros-slate leading-relaxed mb-8">
         Skihytta på Spikkestad er samlingspunktet for skigruppa – her møtes
         utøvere, trenere og foreldre gjennom hele sesongen. Vi tilbyr
         reklameplass på veggen i hytta, i ulike størrelser og plasseringer.
-        Alle priser under er <strong>foreløpige</strong> og justeres i dialog
+        Alle priser under er <strong class="text-ros-ink">foreløpige</strong> og justeres i dialog
         med interesserte bedrifter.
       </p>
 
       <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
         {reklamepakker.map((pakke) => (
-          <div class="bg-white rounded-xl shadow-md p-6 flex flex-col text-center border border-gray-100">
-            <h3 class="text-xl font-semibold text-gray-900 mb-1">{pakke.navn}</h3>
-            <p class="text-blue-700 font-bold text-lg mb-3">{pakke.pris}</p>
-            <p class="text-gray-600 flex-1">{pakke.beskrivelse}</p>
+          <div class="bg-white rounded-xl shadow-md p-6 flex flex-col text-center border-t-4 border-ros-blue">
+            <h3 class="text-xl font-semibold text-ros-ink mb-1">{pakke.navn}</h3>
+            <p class="text-ros-orange font-bold text-lg mb-3">{pakke.pris}</p>
+            <p class="text-ros-slate flex-1">{pakke.beskrivelse}</p>
           </div>
         ))}
       </div>
@@ -97,77 +102,77 @@ const hvemKanSponse = [
 
     <!-- Lysstolper i marka -->
     <section class="mb-16">
-      <h2 class="text-2xl font-bold text-gray-900 mb-4">Spons en lysstolpe i ROS-løypa</h2>
-      <p class="text-gray-700 leading-relaxed mb-4">
+      <h2 class="text-2xl font-bold text-ros-ink mb-4">Spons en lysstolpe i ROS-løypa</h2>
+      <p class="text-ros-slate leading-relaxed mb-4">
         Vil du være med på å holde skiløypene våre levende? IL ROS Skigruppa
         ønsker å gi privatpersoner, familier og lokale bedrifter muligheten
-        til å <strong>sponse sin egen lysstolpe i ROS-løypa</strong>. Med
+        til å <strong class="text-ros-ink">sponse sin egen lysstolpe i ROS-løypa</strong>. Med
         flere hundre stolper gjennom løypenettet håper vi å skape et synlig
         og hyggelig spleiselag for drift og utvikling av skitilbudet vårt.
       </p>
 
-      <h3 class="text-xl font-semibold text-gray-900 mt-8 mb-3">Slik fungerer det</h3>
-      <p class="text-gray-700 leading-relaxed mb-4">
+      <h3 class="text-xl font-semibold text-ros-ink mt-8 mb-3">Slik fungerer det</h3>
+      <p class="text-ros-slate leading-relaxed mb-4">
         Når du sponser en lysstolpe, får stolpen en liten, diskret plakett
         med navn på personen, familien eller bedriften som støtter løypa.
         For bedrifter kan plaketten også inneholde bedriftsnavn og logo.
       </p>
       <div class="bg-white rounded-xl border border-gray-200 shadow-sm p-6 max-w-sm mx-auto text-center mb-4">
-        <p class="text-xs tracking-wide text-gray-500 mb-2">DENNE LYKTSTOLPEN STØTTES AV</p>
-        <p class="text-lg font-semibold text-gray-900">Familien Hansen</p>
-        <p class="text-sm text-blue-700 mt-1">IL ROS SKI</p>
+        <p class="text-xs tracking-wide text-ros-slate mb-2">DENNE LYKTSTOLPEN STØTTES AV</p>
+        <p class="text-lg font-semibold text-ros-ink">Familien Hansen</p>
+        <p class="text-sm text-ros-orange font-semibold mt-1">IL ROS SKI</p>
       </div>
-      <p class="text-gray-700 leading-relaxed mb-4">
-        Stolpene nummereres, slik at du får <strong>din egen stolpe i
+      <p class="text-ros-slate leading-relaxed mb-4">
+        Stolpene nummereres, slik at du får <strong class="text-ros-ink">din egen stolpe i
         løypa</strong>. Har du en favorittdel av løypa, en bakke du kjenner
         godt eller et sted som betyr noe spesielt, kan du gjerne ønske deg en
         stolpe i dette området så langt det er ledig kapasitet.
       </p>
 
-      <h3 class="text-xl font-semibold text-gray-900 mt-8 mb-3">Hva går pengene til?</h3>
-      <p class="text-gray-700 mb-3">Bidragene går direkte til arbeidet i IL ROS Skigruppa, blant annet til:</p>
-      <ul class="list-disc list-inside text-gray-700 space-y-1 mb-4">
+      <h3 class="text-xl font-semibold text-ros-ink mt-8 mb-3">Hva går pengene til?</h3>
+      <p class="text-ros-slate mb-3">Bidragene går direkte til arbeidet i IL ROS Skigruppa, blant annet til:</p>
+      <ul class="list-disc list-inside text-ros-slate space-y-1 mb-4">
         {hvaGarPengeneTil.map((punkt) => <li>{punkt}</li>)}
       </ul>
-      <p class="text-gray-700 leading-relaxed mb-8">
-        Målet er enkelt: <strong>best mulig skiløyper og aktivitetstilbud for flest mulig.</strong>
+      <p class="text-ros-slate leading-relaxed mb-8">
+        Målet er enkelt: <strong class="text-ros-ink">best mulig skiløyper og aktivitetstilbud for flest mulig.</strong>
       </p>
 
-      <h3 class="text-xl font-semibold text-gray-900 mt-8 mb-4">Hvem kan sponse en stolpe?</h3>
+      <h3 class="text-xl font-semibold text-ros-ink mt-8 mb-4">Hvem kan sponse en stolpe?</h3>
       <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
         {hvemKanSponse.map((gruppe) => (
           <div class="bg-white rounded-xl shadow-md p-6 border border-gray-100">
-            <h4 class="font-semibold text-gray-900 mb-2">{gruppe.tittel}</h4>
-            <p class="text-gray-600 text-sm">{gruppe.beskrivelse}</p>
+            <h4 class="font-semibold text-ros-ink mb-2">{gruppe.tittel}</h4>
+            <p class="text-ros-slate text-sm">{gruppe.beskrivelse}</p>
           </div>
         ))}
       </div>
 
-      <h3 class="text-xl font-semibold text-gray-900 mt-8 mb-4">Priser</h3>
+      <h3 class="text-xl font-semibold text-ros-ink mt-8 mb-4">Priser</h3>
       <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
         {lysstolpePriser.map((pakke) => (
-          <div class="bg-blue-50 rounded-xl shadow-md p-6 flex flex-col text-center border border-blue-100">
-            <h4 class="text-xl font-semibold text-gray-900 mb-1">{pakke.navn}</h4>
-            <p class="text-blue-700 font-bold text-lg mb-3">{pakke.pris}</p>
-            <p class="text-gray-600 flex-1">{pakke.beskrivelse}</p>
+          <div class="bg-ros-blue-tint rounded-xl shadow-md p-6 flex flex-col text-center border border-ros-blue/10">
+            <h4 class="text-xl font-semibold text-ros-ink mb-1">{pakke.navn}</h4>
+            <p class="text-ros-orange font-bold text-lg mb-3">{pakke.pris}</p>
+            <p class="text-ros-slate flex-1">{pakke.beskrivelse}</p>
           </div>
         ))}
       </div>
-      <p class="text-gray-700 leading-relaxed mt-6">
+      <p class="text-ros-slate leading-relaxed mt-6">
         Produksjon og montering av standard plakett er inkludert. Etter
         perioden får sponsor mulighet til å fornye støtten og beholde
         stolpen.
       </p>
-      <p class="text-gray-700 leading-relaxed mt-4">
+      <p class="text-ros-slate leading-relaxed mt-4">
         Nysgjerrig på hvordan dette kan se ut i praksis? Se
-        <a href="/stolperegisteret" class="text-blue-700 font-semibold hover:underline">stolperegisteret</a> –
+        <a href="/stolperegisteret" class="text-ros-blue font-semibold hover:text-ros-orange transition">stolperegisteret</a> –
         et interaktivt kart over løypa med hver enkelt stolpe.
       </p>
     </section>
 
     <section class="text-center">
-      <h2 class="text-2xl font-semibold text-gray-800 mb-3">Vil du være med?</h2>
-      <p class="text-gray-700 mb-6">
+      <h2 class="text-2xl font-semibold text-ros-ink mb-3">Vil du være med?</h2>
+      <p class="text-ros-slate mb-6">
         Ta kontakt for å registrere deg og oppgi ønsket navn på plaketten –
         bedrifter kan også sende inn logo. Har du ønske om en bestemt stolpe
         eller del av løypa, kan dette oppgis ved registrering, og vi
@@ -175,7 +180,7 @@ const hvemKanSponse = [
       </p>
       <a
         href="/kontakt"
-        class="inline-block bg-green-600 text-white font-semibold py-3 px-6 rounded-lg shadow-md hover:bg-green-700 transition">
+        class="inline-block bg-ros-orange text-white font-semibold py-3 px-6 rounded-lg shadow-md hover:bg-ros-orange-dark transition">
         Spons en stolpe – kontakt oss
       </a>
     </section>
